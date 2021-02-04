@@ -1,0 +1,44 @@
+
+
+    点击签署 
+    1）/bc/assemble/docSign/getAuthUrl    返回值判断是否需要认证校验   signType ： FACE 或CLOUD 或 UKEY，
+	其中当为FACE时，authRsult不是‘PASS’时，会跳转到认证校验
+    	这个接口是用来获取signType的，再判断是否需要认证校验，如果直接提供signType 且不用认证的话，可以忽略这个接口
+
+    2）/bc/assemble/docSign/saveAuthResult 校验页面返回后，调用此接口   保存身份验证接口
+    3)  ①企业 /bc/assemble/seal/searchAvailableSeals       获取可用签章
+          ②个人 /stamp/stampList/                          获取可用签章
+4）获取轨迹信息   /documentlog/query   还有当前业务的合同信息
+(2021/01/27:接口调用顺序逻辑又有变动了，新增5、6  )
+5）查询  ukey签署已盖章信息查询  /bc/assemble/docSign/getDocumentSealInfo
+6）/pdf/getSealRatio   //计算印章图片在PDF每一页宽高的比例
+
+
+    点击一键盖章：
+    7）/pdf/getSealRatio   //计算印章图片在PDF每一页宽高的比例
+    点击确认签署：
+    8）certType为 FACE或者CLOUD 时 为手机号校验，发送校验码   /message/sendEcAuthCode；  UKEY为ukey校验
+    9）确认签约 /bc/assemble/docSign/trusteeship
+    点击拒签文件
+    10）/bc/assemble/docSign/refuse
+
+
+其中加载文件的地址为：/bc/assemble/docManager/previewFile?fileUrl=83873181332582400
+
+    UKEY为ukey签署：
+            ukey：①检测证书环境
+        1）/bc/assemble/docSign/getUkeySeals/   ukey绑定的印章列表信息查询  判断当前是否有可用的印章 没有则不能签章
+            ukey： ②获取证书  ③获取证书密钥类型 
+        2）提交签署：/bc/assemble/docSign/ukFirst   第一步     
+            ukey：④获取随机字符串签名
+        3）/bc/assemble/docSign/ukSecond           第二步  
+        4） /bc/assemble/docSign/getDocumentSealInfo  ukey签署已盖章信息查询     
+	页面逻辑判断，有待签署的合同就  提醒换key，继续签署
+
+
+
+
+
+
+
+

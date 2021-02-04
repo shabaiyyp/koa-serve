@@ -10,7 +10,8 @@ module.exports = {
       "node_modules",
       "logs",
       "public",
-      "README.MD"
+      "README.MD",
+      'files'
     ],
     error_file: "./logs/app-err.log", // 错误日志路径 
     out_file: "./logs/app-out.log", // 普通日志路径 

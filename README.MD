@@ -418,3 +418,10 @@ function proxyReq(path, method, params) {
 
  用node原生来写的。
 
+接收文件：
+koa-bodyparser  不支持 formdata的传参  局限性比较大
+可以采用koa-body
+后面看看原生(不用中间件)的吧
+略坑
+
+

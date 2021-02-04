@@ -5,8 +5,18 @@ const cors = require('@koa/cors');
 app.use(cors());
 var Router = require('koa-router');
 var router = new Router();
-const bodyParser = require('koa-bodyparser')
-app.use(bodyParser());
+// const bodyParser = require('koa-bodyparser')
+// app.use(bodyParser());
+const koaBody = require('koa-body');
+app.use(koaBody(
+  {
+    multipart: true, // 支持文件上传
+    // formidable: {
+    //   maxFieldsSize: 2 * 1024 * 1024, // 最大文件为2兆
+    //   multipart: true // 是否支持 multipart-formdate 的表单
+    // }
+  }
+))
 
 
 // 一般路由会有一个公共前缀
