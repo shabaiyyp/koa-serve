@@ -16,7 +16,7 @@ files.post('/upload', (ctx, next) => {
         // 组装成绝对路径
         const fileResource = filePath + `${file.name}`;
         // 使用 createWriteStream 写入数据，然后使用管道流pipe拼接
-        console.log(filePath,fileResource)
+        console.log(filePath, fileResource)
         const writeStream = fs.createWriteStream(fileResource);
         // 判断  文件夹是否存在，如果不在的话就创建一个
         if (!fs.existsSync(filePath)) {
@@ -29,12 +29,41 @@ files.post('/upload', (ctx, next) => {
                 }
             });
         } else {
-           
-       fileReader.pipe(writeStream);
-       ctx.body = common.apiTemplate({}, '上传2成功');
+
+            fileReader.pipe(writeStream);
+            ctx.body = common.apiTemplate({}, '上传2成功');
         }
     })
 })
+
+files.get('/download', (ctx, next) => {
+    const filePath = path.join(__dirname, '../files/file.doc');
+
+    ctx.set('Content-Type', 'application/octet-stream');
+    ctx.set('Content-Disposition', 'attachment; filename=' + 'aa.doc');
+  
+    ctx.body  = fs.createReadStream(filePath)
+
+
+})
+
+
+/* 
+async downloaddb(ctx) {
+  // 获取下载文件的名称
+    let filename = ctx.request.query.file;
+    // 获取下载文件路径
+    var filePath = getBackupsPath(filename);
+    var stats = fs.statSync(filePath);
+    ctx.set('Content-Type', 'application/octet-stream');
+    ctx.set('Content-Disposition', 'attachment; filename=' + filename);
+    ctx.set('Content-Length', stats.size);
+    return ctx.body = fs.createReadStream(filePath);
+  }
+
+
+*/
+
 
 module.exports = files
 
@@ -88,7 +117,7 @@ router.post('/upload', (ctx) => {
 */
 
 
-/* 
+/*
 写入文件也可以这样
 // fileReader.on("data",function(data){
 //     writeStream.write(data)
